@@ -1,0 +1,9 @@
+#ignore all files in the build directory
+build/*
+
+#ignore the executables
+app
+sc1
+
+#ignore object files
+*.o
