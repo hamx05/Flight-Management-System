@@ -193,7 +193,7 @@ int cancel_booking(const char *username, int flight_number, int seat_number)
 
     if (user_index == -1) {
         pthread_mutex_unlock(&read_mutex);
-        printf("User not found\n");
+        printf("Failed to cancel the booking.\n");
         return 0;
     }
 
