@@ -2,7 +2,7 @@
 build/*
 
 #ignore the executables
-app
+flight_system
 sc1
 
 #ignore object files
