@@ -228,7 +228,7 @@ void get_flight_details_for_writer(flights flight_array[MAX_FLIGHTS]) //to be us
 int select_flight(flights flight[])
 {
     char choice;
-    printf("Following Are the flights Avaialable:-\n\n");
+    printf("Following Are the flights Available:-\n\n");
     for(int i=0; i<MAX_FLIGHTS; i++) 
           printf("%d) %s", i+1, flight[i].name);
 
