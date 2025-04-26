@@ -1,29 +1,31 @@
-build: main.o cancellation.o view_flights.o book_flight.o
-	gcc main.o cancellation.o view_flights.o book_flight.o -o flight_system
+$(shell mkdir -p build)
 
-main.o: main.c
-	gcc -c main.c
+OBJ_DIR = build
+SRCS = main.c cancellation.c book_flight.c view_flights.c
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+TARGET = flight_system
 
-cancellation.o: cancellation.c
-	gcc -c cancellation.c
+$(TARGET): $(OBJS)
+	gcc $(OBJS) -o $(TARGET)
 
-view_flights.o: view_flights.c
-	gcc -c view_flights.c
+$(OBJ_DIR)/%.o: %.c
+	gcc -c $< -o $@
 
-book_flight.o: book_flight.c
-	gcc -c book_flight.c
+SIM_OBJS = $(OBJ_DIR)/simulation.o $(OBJ_DIR)/cancellation.o $(OBJ_DIR)/view_flights.o $(OBJ_DIR)/book_flight.o
+SIM_TARGET = sc1
 
-simulation.o: simulation.c
-	gcc -c simulation.c
-	
+$(SIM_TARGET): $(SIM_OBJS)
+	gcc $(SIM_OBJS) -lpthread -o $(SIM_TARGET)
 
-run: build
-	./flight_system
+$(OBJ_DIR)/simulation.o: simulation.c
+	gcc -c $< -o $@
 
-simul: simulation.o cancellation.o view_flights.o book_flight.o
-	gcc simulation.o view_flights.o cancellation.o book_flight.o -lpthread -o sc1
-	./sc1
+run: $(TARGET)
+	./$(TARGET)
+
+simul: $(SIM_TARGET)
+	./$(SIM_TARGET)
 
 clean:
-	rm -f main.o cancellation.o view_flights.o book_flight.o flight_system sc1
+	rm -f $(OBJ_DIR)/*.o $(TARGET) $(SIM_TARGET)
 
